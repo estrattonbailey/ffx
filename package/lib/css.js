@@ -49,8 +49,6 @@ export const toClassName = config => {
 
   style && writeCSS()
 
-  console.log(sheet)
-
   return cs.join(' ')
 }
 
