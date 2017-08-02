@@ -38,17 +38,7 @@ const gen = (k, o, cs) => {
   }
 }
 
-export const writeCSS = () => { 
-  style.innerHTML = sheet.sort((a, b) => {
-    return typeof a[1] === 'number' ? 1 : -1
-  }).sort((a, b) => {
-    return (typeof a[1] === 'number' && a[1] > b[1]) ? 1 : -1
-  }).map(a => {
-    return a.map(a => {
-      return Array.isArray(a) ? a.join('') : a
-    }).join('')
-  }).join('')
-}
+export const writeCSS = () => { style.innerHTML = getCSS() }
 
 export const toClassName = config => {
   let cs = []
@@ -64,4 +54,12 @@ export const toClassName = config => {
   return cs.join(' ')
 }
 
-export const getCSS = () => sheet.join(' ')
+export const getCSS = () => sheet.sort((a, b) => {
+  return typeof a[1] === 'number' ? 1 : -1
+}).sort((a, b) => {
+  return (typeof a[1] === 'number' && a[1] > b[1]) ? 1 : -1
+}).map(a => {
+  return a.map(a => {
+    return Array.isArray(a) ? a.join('') : a
+  }).join('')
+}).join('') 

@@ -1,5 +1,5 @@
 # ffx
-Teeny-tiny flexbox grid for React. **1.9kb gzipped.**
+Teeny-tiny flexbox grid for React. **<2kb gzipped.**
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 
@@ -11,20 +11,80 @@ Teeny-tiny flexbox grid for React. **1.9kb gzipped.**
 5. SSR API
 
 ## Usage
-Basic usage could look like this:
+ffx exports two components, `Flex` and `Box`. `Flex` is designed to be the wrapper and *immediate* parent of `Box`.
 ```javascript
 import { Flex, Box } from 'ffx'
 
-<Flex gutter={1} wrap={true}>
-  <Box width={1/4}>...</Box>
-  <Box width={'200px'}>...</Box>
-  <Box width={'auto'}>...</Box>
-  <Box width={[ 1, [900, 1/2] ]}>...</Box>
+<Flex>
+  <Box />
+  <Box />
+</Flex>
+```
+
+Examples:
+```javascript
+// 1em gutter
+<Flex gutter={1} />
+
+// 1em gutter, 2em gutter above 800px
+<Flex gutter={[ 1, [ 800, 2 ] ]} />
+
+// wrappable flexbox
+<Flex wrap={true} />
+
+// wrappable flexbox, nowrap above 800px
+<Flex wrap={[ true, [ 800, false ]} />
+
+// passed directly to align-items
+<Flex alignItems='flex-start' />
+
+// passed directly to justifyContent
+<Flex justifyContent='flex-start' />
+
+// 50% wide
+<Box width={1/2} /> // or <Box width={0.5} />
+
+// 100% wide, 50% wide above 800px
+<Box width={[ 1, [ 800, 1/2 ] ]} />
+
+// 200px wide
+<Box width='200px' />
+
+// fill available space
+<Box width='auto' />
+
+// 200px wide, auto width above 800px
+<Box width={[ '200px', [ 800, 'auto' ] ]} />
+
+// flex order
+<Box order={-1} />
+
+// flex order
+<Box order={[ -1, [ 800, 'unset' ]} />
+
+// offset by 25%
+<Box offset={1/4} width={1/2} />
+
+// offset by 50% above 800px
+<Box offset={[[800, 1/2]]} width={[ 1, [ 800, 1/2 ] ]} />
+```
+
+## Nesting
+Grids are fully nestable.
+```javascript
+<Flex gutter={1}>
+  <Box width={1/3} />
+  <Box width={2/3}>
+    <Flex gutter={1}>
+      <Box width={1/2} />
+      <Box width={1/2} />
+    </Flex>
+  </Box>
 </Flex>
 ```
 
 ## SSR
-Pseudo-code:
+This isn't production code, just a simplified example.
 ```javascript
 import { getCSS } from 'ffx'
 
@@ -41,28 +101,5 @@ res.send(`
 </html>
 `)
 ```
-
-## API
-In order to define breakpoints, some properties accept arrays of values (`responsive-config`). For example, in the below example, the `Box` is 100% wide below 900 pixels, and 50% wide above 900px:
-```javascript
-<Box width={[
-  1,
-  [900, 1/2]
-]} />
-```
-
-All config values:
-- `Flex`
-  - `gutter` - `integer` or `responsive-config`, values are converted to em units i.e. `2` becomes `2em`
-  - `wrap` - `boolean` or `responsive-config`
-  - `alignItems` - `string`, passed directly to `align-items: <config>` CSS property
-  - `justifyContent` - `string`, passed directly to `justify-content: <config>` CSS property
-- `Box`
-  - `width` - `integer`, `string`, or `responsive-config`
-  - `order` - `integer` or `responsive-config`
-  - `offset` - `integer`, `string`, or `responsive-config`
-
-## TODO
-Docs need work, I know.
 
 MIT License
