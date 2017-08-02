@@ -18,8 +18,8 @@ const defs = {
   order: num => `order: ${num}`,
   offset: val => `margin-left: ${typeof val === 'number' ? (val * 100) + '%' : val}`
 }
-const mx = ([ m, v ], cn, type) => `@media(min-width: ${m / 16}em){${rx(cn, type, v)}}`
-const rx = (cn, type, val) => Array.isArray(val) ? mx(val, cn, type) : '.' + cn + '{' + defs[type](val) + '}'
+const mx = ([ m, v ], cn, type) => [ `@media(min-width:`, m / 16, `em){`, rx(cn, type, v), `}` ]
+const rx = (cn, type, val) => Array.isArray(val) ? mx(val, cn, type) : [ `.${cn}{`, defs[type](val), '}' ]
 
 if (typeof window !== 'undefined') {
   let _s = document.getElementById('ffx')
@@ -38,7 +38,17 @@ const gen = (k, o, cs) => {
   }
 }
 
-export const writeCSS = () => { style.innerHTML = sheet.join(' ') }
+export const writeCSS = () => { 
+  style.innerHTML = sheet.sort((a, b) => {
+    return typeof a[1] === 'number' ? 1 : -1
+  }).sort((a, b) => {
+    return (typeof a[1] === 'number' && a[1] > b[1]) ? 1 : -1
+  }).map(a => {
+    return a.map(a => {
+      return Array.isArray(a) ? a.join('') : a
+    }).join('')
+  }).join('')
+}
 
 export const toClassName = config => {
   let cs = []
@@ -48,6 +58,8 @@ export const toClassName = config => {
   }
 
   style && writeCSS()
+
+  console.log(sheet)
 
   return cs.join(' ')
 }
