@@ -27,10 +27,10 @@ class Flex extends React.Component {
     return (
       <div
         className={
-          p.className || '' + ' ' + toClassName({
+          toClassName({
             margin: this.state.gutter,
             wrap: p.wrap || false
-          })
+          }) + (p.className ? ' ' + p.className : '')
         }
         style={{
           display: 'flex',

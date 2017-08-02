@@ -13,7 +13,7 @@ const Box = (p, c) => {
   if (p.offset) cn['offset'] = p.offset
   if (p.order) cn['order'] = p.order
 
-  return <div className={p.className || '' + ' ' + toClassName(cn)}>{p.children}</div>
+  return <div className={toClassName(cn) + (p.className ? ' ' + p.className : '')}>{p.children}</div>
 }
 
 Box.contextTypes = {
