@@ -35,7 +35,8 @@ class Flex extends React.Component {
         style={{
           display: 'flex',
           alignItems: p.alignItems || 'flex-start',
-          justifyContent: p.justifyContent || 'flex-start'
+          justifyContent: p.justifyContent || 'flex-start',
+          overflow: 'hidden'
         }}>
         {p.children}
       </div>
