@@ -1,6 +1,6 @@
 {
   "name": "ffx",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "",
   "main": "dist/index.js",
   "files": [
@@ -45,6 +45,8 @@
     "react-dom": "^15.4.2"
   },
   "dependencies": {
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }

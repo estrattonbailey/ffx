@@ -33,7 +33,7 @@ Examples:
 <Flex wrap={true} />
 
 // wrappable flexbox, nowrap above 800px
-<Flex wrap={[ true, [ 800, false ]} />
+<Flex wrap={[ true, [ 800, false ] ]} />
 
 // passed directly to align-items
 <Flex alignItems='flex-start' />
@@ -60,13 +60,18 @@ Examples:
 <Box order={-1} />
 
 // flex order
-<Box order={[ -1, [ 800, 'unset' ]} />
+<Box order={[ -1, [ 800, 'unset' ] ]} />
 
 // offset by 25%
 <Box offset={1/4} width={1/2} />
 
 // offset by 50% above 800px
 <Box offset={[[800, 1/2]]} width={[ 1, [ 800, 1/2 ] ]} />
+```
+
+CSS output from above elements:
+```css
+.⚡︎0{margin-left: -0.5em; margin-right: -0.5em}.⚡︎1{flex-wrap: nowrap}.⚡︎3{margin-left: -0em; margin-right: -0em}.⚡︎4{flex-wrap: wrap}@media(min-width:50em){.⚡︎5{flex-wrap: nowrap}}@media(min-width:50em){.⚡︎2{margin-left: -1em; margin-right: -1em}}
 ```
 
 ## Nesting

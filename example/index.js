@@ -60,7 +60,6 @@ const App = props => (
       </Box>
       <Box width={[
         1,
-        [500, 3/4],
         [500, 'calc(100% - 200px)'],
       ]}>
         <div className="filler">
