@@ -1,6 +1,7 @@
 let id = 0
 let sheet = []
 let style = null
+let rewrite = false
 const hash = () => (id++).toString(36)
 const cx = () => '⚡︎' + hash()
 const cache = {}
@@ -32,9 +33,9 @@ const gen = (k, o, cs) => {
   if (cache[k + o]) {
     return cache[k + o]
   } else {
+    rewrite = true
     cache[k + o] = cx()
     sheet.push(rx(cache[k + o], k, o))
-    style && writeCSS()
     return cache[k + o]
   }
 }
@@ -46,6 +47,11 @@ export const toClassName = config => {
 
   for (let k in config) {
     cs.push(Array.isArray(config[k]) ? config[k].map(o => gen(k, o)).join(' ') : gen(k, config[k]))
+  }
+
+  if (rewrite && style) {
+    writeCSS()
+    rewrite = false
   }
 
   return cs.join(' ')

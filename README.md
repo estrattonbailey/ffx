@@ -1,5 +1,5 @@
 # ffx
-Teeny-tiny flexbox grid for React. **<2kb gzipped.**
+Teeny-tiny flexbox grid for React. **2kb gzipped.**
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](http://standardjs.com)
 
