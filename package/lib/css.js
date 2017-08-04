@@ -34,6 +34,7 @@ const gen = (k, o, cs) => {
   } else {
     cache[k + o] = cx()
     sheet.push(rx(cache[k + o], k, o))
+    style && writeCSS()
     return cache[k + o]
   }
 }
@@ -47,15 +48,15 @@ export const toClassName = config => {
     cs.push(Array.isArray(config[k]) ? config[k].map(o => gen(k, o)).join(' ') : gen(k, config[k]))
   }
 
-  style && writeCSS()
-
   return cs.join(' ')
 }
 
 export const getCSS = () => sheet.sort((a, b) => {
-  return typeof a[1] === 'number' ? 1 : -1
+  return /\@media/.test(a[0]) ? 1 : -1
 }).sort((a, b) => {
-  return (typeof a[1] === 'number' && a[1] > b[1]) ? 1 : -1
+  return (typeof a[1] === 'number' && typeof b[1] === 'number') ? (
+    a[1] > b[1] ? 1 : 0
+  ) : -1
 }).map(a => {
   return a.map(a => {
     return Array.isArray(a) ? a.join('') : a
