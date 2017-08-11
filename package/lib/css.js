@@ -57,14 +57,17 @@ export const toClassName = config => {
   return cs.join(' ')
 }
 
-export const getCSS = () => sheet.sort((a, b) => {
-  return /\@media/.test(a[0]) ? 1 : -1
-}).sort((a, b) => {
-  return (typeof a[1] === 'number' && typeof b[1] === 'number') ? (
-    a[1] > b[1] ? 1 : 0
-  ) : -1
-}).map(a => {
-  return a.map(a => {
-    return Array.isArray(a) ? a.join('') : a
+export const getCSS = () => {
+  let a = []
+  let b = []
+
+  sheet.forEach(r => /@media/.test(r[0]) ? b.push(r) : a.push(r))
+
+  return a.map(r => r.join('')).join('') + b.sort((a, b) => (
+    a[1] - b[1]
+  )).map(a => {
+    return a.map(a => {
+      return Array.isArray(a) ? a.join('') : a
+    }).join('')
   }).join('')
-}).join('') 
+}
